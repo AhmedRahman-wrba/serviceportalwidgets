@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_dictionary action="INSERT_OR_UPDATE" element="" extends="sc_request" table="x_11042_ct_catalog_templates">
+    <sys_dictionary action="INSERT_OR_UPDATE" element="is_valid" table="x_11042_ct_item_templates">
         <active>true</active>
         <array>false</array>
         <array_denormalized>false</array_denormalized>
-        <attributes/>
+        <attributes>edge_encryption_enabled=true</attributes>
         <audit>false</audit>
         <calculation><![CDATA[(function calculatedFieldValue(current) {
 
@@ -14,7 +14,7 @@
         <choice/>
         <choice_field/>
         <choice_table/>
-        <column_label/>
+        <column_label>Is Valid</column_label>
         <comments/>
         <create_roles/>
         <default_value/>
@@ -27,15 +27,15 @@
         <dynamic_creation_script/>
         <dynamic_default_value/>
         <dynamic_ref_qual/>
-        <element/>
+        <element>is_valid</element>
         <element_reference>false</element_reference>
         <foreign_database/>
         <function_definition/>
         <function_field>false</function_field>
-        <internal_type display_value="Collection">collection</internal_type>
+        <internal_type display_value="">boolean</internal_type>
         <mandatory>false</mandatory>
         <max_length>40</max_length>
-        <name>x_11042_ct_catalog_templates</name>
+        <name>x_11042_ct_item_templates</name>
         <next_element/>
         <primary>false</primary>
         <read_only>false</read_only>
@@ -52,16 +52,16 @@
         <staged>false</staged>
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2019-01-21 17:40:15</sys_created_on>
-        <sys_id>1c525165db53230004eef36f29961993</sys_id>
+        <sys_created_on>2019-01-27 08:37:33</sys_created_on>
+        <sys_id>0fd46bfcdb13230004eef36f299619a1</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name>x_11042_ct_catalog_templates</sys_name>
+        <sys_name>Is Valid</sys_name>
         <sys_package display_value="Catalog Templates" source="x_11042_ct">0ff722cfdb03230004eef36f29961903</sys_package>
         <sys_policy/>
         <sys_scope display_value="Catalog Templates">0ff722cfdb03230004eef36f29961903</sys_scope>
-        <sys_update_name>sys_dictionary_x_11042_ct_catalog_templates_NULL</sys_update_name>
-        <sys_updated_by>system</sys_updated_by>
-        <sys_updated_on>2019-01-29 05:50:46</sys_updated_on>
+        <sys_update_name>sys_dictionary_x_11042_ct_item_templates_is_valid</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-01-27 08:37:33</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
