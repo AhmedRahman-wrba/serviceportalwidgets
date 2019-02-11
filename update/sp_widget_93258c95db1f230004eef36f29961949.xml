@@ -4,6 +4,53 @@
         <client_script><![CDATA[function ($scope, $http, spUtil, nowAttachmentHandler, $rootScope, $sanitize, $window, $sce, i18n, $timeout, $log, spAriaUtil) {
 	var c = this;
 	c.quantity = 1;
+		
+
+	
+	c.data.submitItem=function(){
+		if($('#cbtest').is(":checked"))
+  $("#tempSave").css({"display":"block"});
+		else{
+			 $scope.triggerOnSubmit();
+ 
+		}
+	};
+	
+	c.data.saveTemp =function(){
+		if(c.data.tempName==''||c.data.tempDesc==''||c.data.tempName==undefined||c.data.tempDesc==undefined){
+			alert('Please fill the details');
+		return;}
+		else{
+		$scope.triggerOnSubmit();
+		 $("#tempSave").css({"display":"none"});
+		
+		}
+	};
+	
+$(".close-modal").click(function(){
+  $(".modal").css({"display":"none"});
+  // $("body").css({"overflow-y": "auto"}); //Prevent double scrollbar.
+});
+	
+//accordion
+/*	$timeout(function(){
+	
+var items = document.querySelectorAll(".accordion .row");
+
+function toggleAccordion(){
+  this.classList.toggle('active');
+  this.nextElementSibling.classList.toggle('active');
+	
+}
+for (var i = 0; i < items.length; i++) {
+  items[i].addEventListener("click",toggleAccordion);
+}
+//items.forEach(item => item.addEventListener('click', toggleAccordion));
+	});
+	*/
+	//end accordion
+	
+	
 	if ($scope.data.sc_cat_item)
 		$scope.data.sc_cat_item.description = $sce.trustAsHtml($scope.data.sc_cat_item.description);
 	c.widget._debugContextMenu = [
@@ -40,10 +87,10 @@
 		return true;
 	}
 	
-	c.getTemplates = function() {
+/*	c.getTemplates = function() {
 		c.data.action = 'get_templates';
 		c.server.update();
-	}
+	}*/
 
 
 	$scope.$on('dialog.upload_too_large.show', function(e){
@@ -161,8 +208,13 @@
 		var str = $('#cbtest')[0].checked;
 		if(str == 'true' || str == true){
 		c.data.mapping = $scope.data.sc_cat_item;
+			//console.log(c.data.mapping)
 		c.data.action = 'add_template';
-		c.server.update();
+		c.server.update().then(function(){
+			
+			spUtil.addInfoMessage("Template has been saved");
+			
+		})
 		}
 		$scope.submitted = true;
 		$scope.submitting = true;
@@ -237,6 +289,16 @@
   padding: 5px;
 }
 
+.saveText{
+font-size:11px;
+}
+.check{
+margin-right: 4px;
+    float: left;
+}
+
+
+}
 .p-t-none {
   padding-top: 0 !important;
 }
@@ -525,7 +587,347 @@ ul {
 				}
 			}
 		}
-	}</css>
+	}
+@import "bourbon";
+@import "neat";
+
+$base-duration: 500ms;
+
+// Colors
+$color-1: #2c3e50;
+$color-2: #3498db;
+$color-3: #2ecc71;
+$color-4: #e74c3c;
+
+// Breakpoints
+$sm: new-breakpoint(min-width 320px);
+$med: new-breakpoint(min-width 768px);
+$lg: new-breakpoint(min-width 1024px);
+
+*, *:before, *:after {
+	box-sizing: border-box;
+	outline: none;
+}
+
+body {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100vh;
+	background-color: whitesmoke;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 16px;
+	font-smooth: auto;
+	font-weight: 300;
+	line-height: 1.5;
+	color: #444;
+	background-image: url('http://dakotarumors.com/assets/img/header-bg.jpg');
+	background-position: center center;
+	background-size: cover;
+	
+	&amp;:before {
+		position: absolute;
+		content: '';
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(white,0.7);
+		z-index: -1;
+	}
+}
+
+p { font-weight: 400; }
+
+a { text-decoration: none; }
+
+label {
+	cursor: pointer;
+}
+
+//---------- modal
+/*.modal-btn {
+	position: relative;
+	display: table-cell;
+	width: 100px;
+	height: 100px;
+	background-color: $color-1;
+	box-shadow: 0 0 40px rgba(black,0.3);
+	border-radius: 50%;
+	font-size: 36px;
+	color: white;
+	text-align: center;
+	line-height: 2.75;
+	transition: box-shadow 250ms ease;
+	
+	&amp;:hover {
+		box-shadow: 0 0 5px rgba(black,0.3);
+	}
+}
+
+.modal-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	z-index: 10;
+	visibility: hidden;
+	transition: background-color $base-duration/2 linear;
+}
+
+.modal-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 50%;
+	height: auto;
+	margin-top: -18%;
+	margin-left: -25%;
+	padding: 30px;
+	background-color: white;
+	border-radius: 4px;
+	box-shadow: 0 0 50px rgba(black,0.5);
+	transform: scale(0);
+	transition: transform $base-duration/2 ease;
+	visibility: hidden;
+	z-index: 20;
+
+	.close {
+		position: relative;
+		float: right;
+		font-size: 18px;
+		transition: transform $base-duration ease;
+		z-index: 11;
+
+		&amp;:hover {
+			color: $color-2;
+			transform: rotate(540deg);
+		}
+	}
+
+	header {
+		position: relative;
+		display: block;
+		border-bottom: 1px solid #eee;
+		//background-color: gray;
+
+		h2 {
+			margin: 0 0 10px;
+			padding: 0;
+			font-size: 28px;
+		}
+	}
+
+	article {
+		position: relative;
+		display: block;
+		margin: 0;
+		padding: 0;
+		font-size: 16px;
+		line-height: 1.75;
+
+		p {
+			//margin-bottom: 30px;
+		}
+	}
+
+	footer {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		width: 100%;
+		margin: 0;
+		padding: 10px 0 0;
+
+		.button {
+			position: relative;
+			padding: 10px 30px;
+			border-radius: 3px;
+			font-size: 14px;
+			font-weight: 400;
+			color: white;
+			text-transform: uppercase;
+			overflow: hidden;
+			
+			&amp;:before {
+				position: absolute;
+				content: '';
+				top: 0;
+				left: 0;
+				width: 0;
+				height: 100%;
+				background-color: rgba(white,0.2);
+				transition: width 250ms ease;
+				z-index: 0;
+			}
+			
+			&amp;:hover {
+				
+				&amp;:before {
+					width: 100%;
+				}
+			}
+
+			&amp;.success {
+				margin-right: 5px;
+				background-color: $color-3;
+			}
+
+			&amp;.danger {
+				background-color: $color-4;
+			}
+		}
+	}
+}
+*/
+
+.modal,
+.modal-box {
+  z-index: 900;
+}
+
+.modal-sandbox {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: transparent;
+}
+
+.modal {
+  display: none; 
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgb(0,0,0);
+  background: rgba(0,0,0,.8);
+  overflow: auto;
+}
+
+.modal-box {
+  position: relative;
+  width: 80%;
+  max-width: 920px;
+  margin: 100px auto;
+  animation-name: modalbox;
+  animation-duration: .4s;
+  animation-timing-function: cubic-bezier(0,0,.3,1.6);
+}
+.modalResize{
+width: 50% !important;
+}
+
+
+.modal-header {
+  padding: 5px 9px !important;
+//  padding: 20px 40px;
+  background: #3a3f51;
+  color: #ffffff;
+}
+
+.modal-body{
+  background: white;
+  padding: 10px 40px;
+}
+
+.modal-footer{
+  background: white;
+  padding: 5px !important;
+}
+/* Close Button */
+.close-modal {
+  text-align: right;
+  cursor: pointer;
+}
+
+/* Animation */
+@-webkit-keyframes modalbox {
+  0% {
+    top: -250px; 
+    opacity: 0;
+  }
+  100% {
+    top: 0; 
+    opacity: 1;
+  }
+}
+
+@keyframes modalbox {
+  0% {
+    top: -250px; 
+    opacity: 0;
+  }
+  100% {
+    top: 0; 
+    opacity: 1;
+  }
+}
+
+/* Aditional Styles */
+
+/*.close-but {
+  top: 50%;
+  left: 50%;
+  padding: 20px 40px;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  text-decoration: none;
+}
+
+
+.close-but {
+  border: 1px solid #333333;
+  outline: none;
+  color: #333333;
+}*/
+
+//temp list
+
+
+/*.tempList {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem 3rem 1rem 1rem;
+  color: #7288a2;
+  font-size: 1.15rem;
+  font-weight: 400;
+  border-bottom: 1px solid #e5e5e5;
+}*/
+
+
+.
+
+//---scroll-bar in modal----
+.modal-sandbox{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 250px;
+    overflow-y: auto;
+}
+
+
+
+</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
@@ -553,24 +955,42 @@ ul {
         <script><![CDATA[// populate the 'data' variable with catalog item, variables, and variable view
 (function() {
 	
-	data.check_templates = false;
+	//data.check_templates = false;
 	// portal can specify a catalog and catalog category home page
 	data.sc_catalog_page = $sp.getDisplayValue("sc_catalog_page") || "sc_home";
 	data.sc_category_page = $sp.getDisplayValue("sc_category_page") || "sc_category";
   data.save_template = false;
-	data.templates = [];
+//	data.templates = [];
 	options.show_add_cart_button = (options.show_add_cart_button == "true");
-
-	var temp = new GlideRecord('x_11042_ct_item_templates');
+	
+/*	function getVariables(temp){
+		var variabl=[];
+var gr= new GlideRecord('x_11042_ct_template_variables');
+		gr.addQuery('template',temp);
+		gr.query();
+		
+		while(gr.next()){
+			var b={};
+			b.displayValue=gr.display_value.getDisplayValue();
+			b.question=gr.ques_label.getDisplayValue();
+			variabl.push(b);
+		}
+		return variabl;
+	}
+	*/
+	/*var temp = new GlideRecord('x_11042_ct_item_templates');
 	temp.addQuery('item',$sp.getParameter('sys_id'));
 	temp.query();
 	while(temp.next()){
 		var a = {};
 		data.check_templates = true;
-		a.number = temp.number;
-		data.templates.push(a);
-	}
-	console.log(data.templates)
+	//	a.number = temp.getValue('number');
+	//a.variables=getVariables(temp.sys_id);
+	a.name=temp.getValue('name');
+		a.description=temp.getValue('description');
+			data.templates.push(a);
+	}*/
+//	console.log(data.templates);
 	if (options.page) {
 		var pageGR = new GlideRecord("sp_page");
 		options.page = (pageGR.get(options.page)) ? pageGR.getValue("id") : null;
@@ -598,11 +1018,14 @@ ul {
 	m.deleteSuccessMsg = gs.getMessage("Attachment deleted successfully");
 	if(input && input.action == 'add_template'){
 		var fields = input.mapping._fields;
+
 		var item = input.mapping.sys_id;
 		var map = new GlideRecord('x_11042_ct_item_templates');
     map.newRecord();
 		map.item = item;
 		map.is_valid = true;
+		map.name=input.tempName;
+		map.description=input.tempDesc;
 		var id = map.insert();
 		createVariables(id,fields);
 
@@ -621,16 +1044,20 @@ ul {
 	
 		
 		function createVariables(temp,map){
+			
 			var tVars = new GlideRecord('x_11042_ct_template_variables');
 			Object.keys(map).forEach(function(k){
+				
 				tVars.newRecord();
 				if(map[k]!=''){
+					if(k!='formatter' && k!='select_template' && k!='catalog_templates'){
+					tVars.ques_label=map[k].label;
 					tVars.template = temp;
 					tVars.actual_value = map[k].value;
 					tVars.display_value = map[k].displayValue;
 					tVars.question = k;
 					tVars.insert();
-				}
+				}}
 				});
 		}
 	
@@ -656,14 +1083,14 @@ ul {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-01-28 05:35:14</sys_created_on>
         <sys_id>93258c95db1f230004eef36f29961949</sys_id>
-        <sys_mod_count>108</sys_mod_count>
+        <sys_mod_count>372</sys_mod_count>
         <sys_name>CT - SC Catalog Item</sys_name>
         <sys_package display_value="Catalog Templates" source="x_11042_ct">0ff722cfdb03230004eef36f29961903</sys_package>
         <sys_policy/>
         <sys_scope display_value="Catalog Templates">0ff722cfdb03230004eef36f29961903</sys_scope>
         <sys_update_name>sp_widget_93258c95db1f230004eef36f29961949</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-01-29 05:41:53</sys_updated_on>
+        <sys_updated_on>2019-02-11 10:04:03</sys_updated_on>
         <template><![CDATA[
 
 <div id="sc_cat_item" >
@@ -676,19 +1103,23 @@ ul {
     <div ng-class="{true:'col-sm-9',false:'col-sm-12'}[data.sc_cat_item.picture.length > 0]">
       <div class="panel panel-default">
         <div class="wrapper-md row">
-          <div class ='col-xs-11'>
+          <div class ='col-xs-10'>
             
         
           <h1 class="h2 m-t-none m-b-sm font-thin">{{::data.sc_cat_item.name}}</h1>
           <div class="text-muted">{{::data.sc_cat_item.short_description}}</div>
           </div>
-          <div class='col-xs-1'>
+          <div class='col-xs-2'>
             
-            	<ul>
-					<li><input type="checkbox" id="cbtest" title='Save as Template'/>
-    <label for="cbtest" class="check-box" title='Save as Template'></label></li>
-					<li ng-if="data.check_templates"><img src='apply_template.png' width='23' height='23' title ='Apply Template' ng-click = 'c.getTemplates();'/></li>
-							</ul>
+            	
+                <div class='check'><input type="checkbox" id="cbtest" title='Save as Template'/>
+                  <label for="cbtest" class="check-box" title='Save as Template'></label></div>
+                <div class='saveText'>
+                  Save As Template
+                </div>
+    
+            
+							
         
             
           </div>
@@ -721,7 +1152,7 @@ ul {
                         ng-options="num for num in [1,2,3,4,5,6,7,8,9,10]">
                 </select>
                 <label ng-if="!submitted" style="float:right;font-weight:normal;cursor:pointer;"><sp-attachment-button></sp-attachment-button><span style="padding-left:4px;">${Add attachments}</span></label>
-                <button ng-if="::c.showOrderNowButton()" tabindex="0" name="submit" ng-disabled="submitted" ng-click="triggerOnSubmit()" class="btn btn-primary">{{submitButtonMsg}}</button>
+                <button ng-if="::c.showOrderNowButton()" tabindex="0" name="submit" ng-disabled="submitted" ng-click="c.data.submitItem()" class="btn btn-primary">{{submitButtonMsg}}</button>
                 <button tabindex="0" ng-if="c.showAddCartBtn()" name="submit" ng-disabled="submitted" ng-click="triggerAddToCart()" class="btn btn-default">${Add to Cart}</button>
                 <span ng-if="submitting" style="padding-left:4px">${Submitting...}</span>
               </span>
@@ -759,11 +1190,43 @@ ul {
 
   <div class="sr-only" aria-live="assertive">{{c.status}}</div>
 </div>
-<div>
-  <ul>
-    <li class="list-group-item" ng-repeat="item in data.templates" ng-include="'ct-template-layout'"></li>
 
-  </ul>
-  </div>]]></template>
+
+
+
+
+<!------Modal --------->
+
+<div class="modal" id="tempSave">
+  <div class="modal-sandbox"></div>
+  <div class="modal-box modalResize">
+    <div class="modal-header">
+       <div class='row'>
+         
+    
+      <div class='col-md-9'><h5>Simple modal box</h5></div>
+      <div class="close-modal col-md-3">&#10006;</div>
+           </div>
+    </div>
+    <div class="modal-body">
+   <div class='row'>
+     
+     
+<div class="form-group col-md-12">
+  <label class="control-label" for="inputDefault">Name</label>
+ <input class="form-control" ng-model="c.data.tempName" type="text">
+</div>
+      <div class="form-group col-md-12">
+  <label class="control-label" for="inputDefault">Description</label>
+  <textarea class="form-control" rows="4" cols="50" ng-model="c.data.tempDesc"></textarea>
+<!--  <input class="form-control" ng-model="c.data.tempDesc" type="text">-->
+</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+       <button class="btn btn-primary" ng-click='c.data.saveTemp()'>Save</button>
+    </div>
+  </div>
+</div>]]></template>
     </sp_widget>
 </record_update>

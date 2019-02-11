@@ -32,13 +32,13 @@
         <image_width>480</image_width>
         <size_bytes>6689</size_bytes>
         <size_compressed>2796</size_compressed>
-        <state>pending</state>
+        <state>available</state>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-01-28 14:27:42</sys_created_on>
         <sys_id>4f0ff15ddb53630004eef36f29961980</sys_id>
-        <sys_mod_count>2</sys_mod_count>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-01-28 14:27:42</sys_updated_on>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_updated_by>guest</sys_updated_by>
+        <sys_updated_on>2019-02-04 11:42:00</sys_updated_on>
         <table_name>ZZ_YYdb_image</table_name>
         <table_sys_id>3d7afd59db53630004eef36f29961993</table_sys_id>
     </sys_attachment>
