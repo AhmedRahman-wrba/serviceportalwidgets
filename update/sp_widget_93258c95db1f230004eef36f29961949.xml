@@ -32,23 +32,6 @@ $(".close-modal").click(function(){
   // $("body").css({"overflow-y": "auto"}); //Prevent double scrollbar.
 });
 	
-//accordion
-/*	$timeout(function(){
-	
-var items = document.querySelectorAll(".accordion .row");
-
-function toggleAccordion(){
-  this.classList.toggle('active');
-  this.nextElementSibling.classList.toggle('active');
-	
-}
-for (var i = 0; i < items.length; i++) {
-  items[i].addEventListener("click",toggleAccordion);
-}
-//items.forEach(item => item.addEventListener('click', toggleAccordion));
-	});
-	*/
-	//end accordion
 	
 	
 	if ($scope.data.sc_cat_item)
@@ -648,144 +631,6 @@ label {
 	cursor: pointer;
 }
 
-//---------- modal
-/*.modal-btn {
-	position: relative;
-	display: table-cell;
-	width: 100px;
-	height: 100px;
-	background-color: $color-1;
-	box-shadow: 0 0 40px rgba(black,0.3);
-	border-radius: 50%;
-	font-size: 36px;
-	color: white;
-	text-align: center;
-	line-height: 2.75;
-	transition: box-shadow 250ms ease;
-	
-	&amp;:hover {
-		box-shadow: 0 0 5px rgba(black,0.3);
-	}
-}
-
-.modal-bg {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	opacity: 0;
-	z-index: 10;
-	visibility: hidden;
-	transition: background-color $base-duration/2 linear;
-}
-
-.modal-content {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 50%;
-	height: auto;
-	margin-top: -18%;
-	margin-left: -25%;
-	padding: 30px;
-	background-color: white;
-	border-radius: 4px;
-	box-shadow: 0 0 50px rgba(black,0.5);
-	transform: scale(0);
-	transition: transform $base-duration/2 ease;
-	visibility: hidden;
-	z-index: 20;
-
-	.close {
-		position: relative;
-		float: right;
-		font-size: 18px;
-		transition: transform $base-duration ease;
-		z-index: 11;
-
-		&amp;:hover {
-			color: $color-2;
-			transform: rotate(540deg);
-		}
-	}
-
-	header {
-		position: relative;
-		display: block;
-		border-bottom: 1px solid #eee;
-		//background-color: gray;
-
-		h2 {
-			margin: 0 0 10px;
-			padding: 0;
-			font-size: 28px;
-		}
-	}
-
-	article {
-		position: relative;
-		display: block;
-		margin: 0;
-		padding: 0;
-		font-size: 16px;
-		line-height: 1.75;
-
-		p {
-			//margin-bottom: 30px;
-		}
-	}
-
-	footer {
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: flex-end;
-		width: 100%;
-		margin: 0;
-		padding: 10px 0 0;
-
-		.button {
-			position: relative;
-			padding: 10px 30px;
-			border-radius: 3px;
-			font-size: 14px;
-			font-weight: 400;
-			color: white;
-			text-transform: uppercase;
-			overflow: hidden;
-			
-			&amp;:before {
-				position: absolute;
-				content: '';
-				top: 0;
-				left: 0;
-				width: 0;
-				height: 100%;
-				background-color: rgba(white,0.2);
-				transition: width 250ms ease;
-				z-index: 0;
-			}
-			
-			&amp;:hover {
-				
-				&amp;:before {
-					width: 100%;
-				}
-			}
-
-			&amp;.success {
-				margin-right: 5px;
-				background-color: $color-3;
-			}
-
-			&amp;.danger {
-				background-color: $color-4;
-			}
-		}
-	}
-}
-*/
 
 .modal,
 .modal-box {
@@ -872,49 +717,6 @@ width: 50% !important;
   }
 }
 
-/* Aditional Styles */
-
-/*.close-but {
-  top: 50%;
-  left: 50%;
-  padding: 20px 40px;
-  background: transparent;
-  color: #ffffff;
-  border: 1px solid #ffffff;
-  text-decoration: none;
-}
-
-
-.close-but {
-  border: 1px solid #333333;
-  outline: none;
-  color: #333333;
-}*/
-
-//temp list
-
-
-/*.tempList {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  padding: 1rem 3rem 1rem 1rem;
-  color: #7288a2;
-  font-size: 1.15rem;
-  font-weight: 400;
-  border-bottom: 1px solid #e5e5e5;
-}*/
-
-
-.
 
 //---scroll-bar in modal----
 .modal-sandbox{
@@ -955,42 +757,15 @@ width: 50% !important;
         <script><![CDATA[// populate the 'data' variable with catalog item, variables, and variable view
 (function() {
 	
-	//data.check_templates = false;
+	
 	// portal can specify a catalog and catalog category home page
 	data.sc_catalog_page = $sp.getDisplayValue("sc_catalog_page") || "sc_home";
 	data.sc_category_page = $sp.getDisplayValue("sc_category_page") || "sc_category";
   data.save_template = false;
-//	data.templates = [];
+
 	options.show_add_cart_button = (options.show_add_cart_button == "true");
 	
-/*	function getVariables(temp){
-		var variabl=[];
-var gr= new GlideRecord('x_11042_ct_template_variables');
-		gr.addQuery('template',temp);
-		gr.query();
-		
-		while(gr.next()){
-			var b={};
-			b.displayValue=gr.display_value.getDisplayValue();
-			b.question=gr.ques_label.getDisplayValue();
-			variabl.push(b);
-		}
-		return variabl;
-	}
-	*/
-	/*var temp = new GlideRecord('x_11042_ct_item_templates');
-	temp.addQuery('item',$sp.getParameter('sys_id'));
-	temp.query();
-	while(temp.next()){
-		var a = {};
-		data.check_templates = true;
-	//	a.number = temp.getValue('number');
-	//a.variables=getVariables(temp.sys_id);
-	a.name=temp.getValue('name');
-		a.description=temp.getValue('description');
-			data.templates.push(a);
-	}*/
-//	console.log(data.templates);
+
 	if (options.page) {
 		var pageGR = new GlideRecord("sp_page");
 		options.page = (pageGR.get(options.page)) ? pageGR.getValue("id") : null;
@@ -1083,14 +858,14 @@ var gr= new GlideRecord('x_11042_ct_template_variables');
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-01-28 05:35:14</sys_created_on>
         <sys_id>93258c95db1f230004eef36f29961949</sys_id>
-        <sys_mod_count>372</sys_mod_count>
+        <sys_mod_count>373</sys_mod_count>
         <sys_name>CT - SC Catalog Item</sys_name>
         <sys_package display_value="Catalog Templates" source="x_11042_ct">0ff722cfdb03230004eef36f29961903</sys_package>
         <sys_policy/>
         <sys_scope display_value="Catalog Templates">0ff722cfdb03230004eef36f29961903</sys_scope>
         <sys_update_name>sp_widget_93258c95db1f230004eef36f29961949</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-02-11 10:04:03</sys_updated_on>
+        <sys_updated_on>2019-02-12 05:49:22</sys_updated_on>
         <template><![CDATA[
 
 <div id="sc_cat_item" >

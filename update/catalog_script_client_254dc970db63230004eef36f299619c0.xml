@@ -7,7 +7,7 @@
         <applies_sc_task>false</applies_sc_task>
         <applies_target_record>false</applies_target_record>
         <applies_to>set</applies_to>
-        <cat_item display_value="DN - Catalog Item">33c0f778db53230004eef36f29961943</cat_item>
+        <cat_item/>
         <cat_variable>IO:29069499db23230004eef36f299619a8</cat_variable>
         <condition/>
         <description/>
